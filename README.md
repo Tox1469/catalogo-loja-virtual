@@ -8,23 +8,24 @@ Trabalho da disciplina de Front-End (Atividade Avaliativa Final).
 
 ## Sobre o projeto
 
-A MixStore é um sistema web de cadastro e consulta de produtos para uma loja virtual de variedades. O catálogo carrega produtos de uma API externa (Fake Store API) e também permite cadastrar produtos novos, que ficam salvos no LocalStorage do navegador.
+A MixStore é um sistema web de cadastro e consulta de produtos pra uma loja virtual de variedades. O catálogo carrega os produtos de uma API externa (Fake Store API) e tambem da pra cadastrar produtos novos, que ficam salvos no LocalStorage do navegador.
 
 ### Funcionalidades
 
-- Listagem de produtos em grid responsivo
+- Listagem dos produtos em grid responsivo
 - Busca por nome e filtro por categoria
-- Cadastro de produtos com validação de formulário em JavaScript puro
+- Cadastro de produto com validação de formulário em JavaScript puro
 - Página de detalhes de cada produto
-- Remoção de produtos cadastrados localmente
-- Layout responsivo (desktop, tablet e celular)
+- Remoção dos produtos cadastrados localmente
+- Layout responsivo (funciona no pc, tablet e celular)
+- Botão de voltar ao topo da página
 
-### Tecnologias utilizadas
+### Tecnologias usadas
 
 - React 18 (componentes, props, useState, useEffect)
-- React Router (navegação entre páginas)
+- React Router (navegação entre as páginas)
 - Styled Components (estilização e componentização)
-- Fetch API (requisições para a Fake Store API)
+- Fetch API (requisições pra Fake Store API)
 - LocalStorage (armazenamento dos produtos cadastrados)
 - Vite (ferramenta de build)
 
@@ -55,9 +56,10 @@ npm run dev
 
 ```
 src/
-  components/      componentes reutilizáveis (Header, Footer, ProdutoCard)
-  pages/           páginas da aplicação (Home, Cadastro, Detalhes, Sobre)
+  components/      componentes reutilizaveis (Header, Footer, ProdutoCard, BotaoTopo)
+  pages/           paginas da aplicação (Home, Cadastro, Detalhes, Sobre)
   produtosStorage.js   funções de acesso ao LocalStorage
+  tema.js          paleta de cores do site (design system)
   App.jsx          componente principal com as rotas
   GlobalStyle.js   estilos globais
   main.jsx         ponto de entrada da aplicação

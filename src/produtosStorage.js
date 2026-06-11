@@ -1,5 +1,5 @@
-// funções para salvar e buscar os produtos cadastrados pelo usuário
-// usamos o LocalStorage para que os dados não se percam ao fechar o navegador
+// funcoes pra salvar e buscar os produtos cadastrados pelo usuario
+// usamos o localStorage pros dados nao sumirem quando fecha o navegador
 
 const CHAVE = 'produtosCadastrados'
 
@@ -13,7 +13,7 @@ export function buscarProdutosLocais() {
 
 export function salvarProdutoLocal(produto) {
   const produtos = buscarProdutosLocais()
-  // gera um id próprio pra não conflitar com os ids da API (1 a 20)
+  // gera um id proprio pra nao conflitar com os ids da api (que vao de 1 a 20)
   produto.id = 'local-' + Date.now()
   produto.local = true
   produtos.push(produto)
