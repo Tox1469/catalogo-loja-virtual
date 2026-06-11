@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+import tema from '../tema.js'
 
 const Cabecalho = styled.header`
-  background-color: #1e2a4a;
+  background-color: ${tema.cores.primaria};
   color: #fff;
   padding: 16px 24px;
   display: flex;
@@ -20,7 +21,7 @@ const Logo = styled.h1`
   font-size: 1.4rem;
 
   span {
-    color: #f5a623;
+    color: ${tema.cores.destaque};
   }
 `
 
@@ -41,8 +42,8 @@ const Menu = styled.nav`
 
   /* classe que o NavLink adiciona sozinho na rota ativa */
   a.active {
-    background-color: #f5a623;
-    color: #1e2a4a;
+    background-color: ${tema.cores.destaque};
+    color: #fff;
     font-weight: bold;
   }
 
@@ -53,7 +54,7 @@ const Menu = styled.nav`
   }
 `
 
-// cabeçalho fixo com o menu de navegação entre as páginas
+// cabecalho fixo com o menu de navegacao
 function Header() {
   return (
     <Cabecalho>

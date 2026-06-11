@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
+import tema from '../tema.js'
 import { buscarProdutosLocais, removerProdutoLocal } from '../produtosStorage.js'
 
 const Conteudo = styled.main`
@@ -11,7 +12,7 @@ const Conteudo = styled.main`
 
 const Voltar = styled(Link)`
   display: inline-block;
-  color: #1e2a4a;
+  color: ${tema.cores.primaria};
   font-size: 0.9rem;
   margin-bottom: 20px;
 
@@ -22,13 +23,13 @@ const Voltar = styled(Link)`
 
 const Painel = styled.section`
   background-color: #fff;
-  border: 1px solid #e3e6ec;
+  border: 1px solid ${tema.cores.borda};
   border-radius: 12px;
   padding: 32px;
   display: flex;
   gap: 40px;
 
-  /* no celular a imagem fica em cima e o texto embaixo */
+  /* no celular vira coluna, imagem em cima e texto embaixo */
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 24px;
@@ -56,8 +57,8 @@ const Info = styled.div`
 
 const Categoria = styled.span`
   align-self: flex-start;
-  background-color: #eef2fb;
-  color: #1e2a4a;
+  background-color: ${tema.cores.fundoClaro};
+  color: ${tema.cores.primaria};
   font-size: 0.8rem;
   padding: 4px 12px;
   border-radius: 20px;
@@ -65,14 +66,14 @@ const Categoria = styled.span`
 `
 
 const Nome = styled.h2`
-  color: #1e2a4a;
+  color: ${tema.cores.primaria};
   font-size: 1.5rem;
 `
 
 const Preco = styled.p`
   font-size: 2rem;
   font-weight: bold;
-  color: #1e7f4f;
+  color: ${tema.cores.verde};
 `
 
 const Descricao = styled.p`
@@ -81,7 +82,7 @@ const Descricao = styled.p`
 `
 
 const Avaliacao = styled.p`
-  color: #f5a623;
+  color: ${tema.cores.destaque};
   font-weight: 600;
   font-size: 0.9rem;
 `
@@ -89,15 +90,15 @@ const Avaliacao = styled.p`
 const BotaoRemover = styled.button`
   align-self: flex-start;
   background-color: #fff;
-  color: #d64545;
-  border: 1px solid #d64545;
+  color: ${tema.cores.erro};
+  border: 1px solid ${tema.cores.erro};
   padding: 10px 18px;
   border-radius: 6px;
   font-size: 0.9rem;
   margin-top: 8px;
 
   &:hover {
-    background-color: #d64545;
+    background-color: ${tema.cores.erro};
     color: #fff;
   }
 `
@@ -108,8 +109,8 @@ const Aviso = styled.p`
   color: #777;
 `
 
-// página de detalhes: busca o produto pelo id da URL
-// se for produto local pega do LocalStorage, senão busca na API
+// pagina de detalhes: pega o produto pelo id que vem na url
+// se for produto local busca no localStorage, senao busca na api
 function Detalhes() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -118,7 +119,7 @@ function Detalhes() {
 
   useEffect(() => {
     async function carregarProduto() {
-      // produtos cadastrados pelo usuário têm id começando com "local-"
+      // produtos cadastrados pela gente tem id comecando com "local-"
       if (id.startsWith('local-')) {
         const locais = buscarProdutosLocais()
         const encontrado = locais.find((p) => p.id === id)
@@ -140,7 +141,7 @@ function Detalhes() {
     }
 
     carregarProduto()
-  }, [id]) // roda de novo se o id da URL mudar
+  }, [id]) // roda de novo se o id da url mudar
 
   function aoRemover() {
     const confirmar = window.confirm('Tem certeza que deseja remover este produto?')
@@ -177,7 +178,7 @@ function Detalhes() {
         <Info>
           <Categoria>{produto.category}</Categoria>
           <Nome>{produto.title}</Nome>
-          {/* produtos da API têm avaliação, os locais não */}
+          {/* so produtos da api tem avaliacao, os locais nao */}
           {produto.rating && (
             <Avaliacao>
               Avaliação: {produto.rating.rate} / 5 ({produto.rating.count}{' '}

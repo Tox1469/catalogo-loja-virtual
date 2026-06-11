@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import tema from '../tema.js'
 import { salvarProdutoLocal } from '../produtosStorage.js'
 
 const Conteudo = styled.main`
@@ -10,7 +11,7 @@ const Conteudo = styled.main`
 `
 
 const Titulo = styled.h2`
-  color: #1e2a4a;
+  color: ${tema.cores.primaria};
   margin-bottom: 6px;
 `
 
@@ -22,7 +23,7 @@ const Subtitulo = styled.p`
 
 const Formulario = styled.form`
   background-color: #fff;
-  border: 1px solid #e3e6ec;
+  border: 1px solid ${tema.cores.borda};
   border-radius: 10px;
   padding: 24px;
   display: flex;
@@ -38,14 +39,15 @@ const Campo = styled.div`
   label {
     font-weight: 600;
     font-size: 0.9rem;
-    color: #1e2a4a;
+    color: ${tema.cores.primaria};
   }
 
   input,
   select,
   textarea {
     padding: 10px 12px;
-    border: 1px solid ${(props) => (props.$temErro ? '#d64545' : '#ccd2dd')};
+    border: 1px solid
+      ${(props) => (props.$temErro ? tema.cores.erro : tema.cores.bordaInput)};
     border-radius: 6px;
     font-size: 0.95rem;
     font-family: inherit;
@@ -58,12 +60,12 @@ const Campo = styled.div`
 `
 
 const MensagemErro = styled.span`
-  color: #d64545;
+  color: ${tema.cores.erro};
   font-size: 0.8rem;
 `
 
 const BotaoSalvar = styled.button`
-  background-color: #1e7f4f;
+  background-color: ${tema.cores.verde};
   color: #fff;
   border: none;
   padding: 12px;
@@ -72,27 +74,27 @@ const BotaoSalvar = styled.button`
   font-weight: 600;
 
   &:hover {
-    background-color: #25995f;
+    background-color: ${tema.cores.verdeHover};
   }
 `
 
 const MensagemSucesso = styled.p`
-  background-color: #e3f5eb;
-  border: 1px solid #1e7f4f;
-  color: #1e7f4f;
+  background-color: ${tema.cores.sucessoFundo};
+  border: 1px solid ${tema.cores.verde};
+  color: ${tema.cores.verde};
   padding: 12px;
   border-radius: 6px;
   text-align: center;
   margin-bottom: 16px;
 `
 
-// página de cadastro de produto com validação feita em JavaScript puro
+// pagina de cadastro com validacao feita na mao em javascript puro
 function Cadastro() {
   const navigate = useNavigate()
   const [sucesso, setSucesso] = useState(false)
   const [erros, setErros] = useState({})
 
-  // valida os campos do formulário e devolve um objeto com os erros encontrados
+  // valida os campos e devolve um objeto com os erros que achou
   function validarFormulario(dados) {
     const novosErros = {}
 
@@ -113,7 +115,7 @@ function Cadastro() {
       novosErros.description = 'A descrição precisa ter pelo menos 10 caracteres.'
     }
 
-    // validação simples de URL da imagem
+    // validacao simples do link da imagem
     if (!dados.image.startsWith('http')) {
       novosErros.image = 'Informe um link válido começando com http ou https.'
     }
@@ -121,11 +123,11 @@ function Cadastro() {
     return novosErros
   }
 
-  // listener do evento de submit do formulário
+  // listener do evento de submit do formulario
   function aoEnviar(evento) {
-    evento.preventDefault() // impede o recarregamento padrão da página
+    evento.preventDefault() // impede a pagina de recarregar sozinha
 
-    // pega os valores direto dos campos usando o FormData (JS puro)
+    // pega os valores direto dos inputs pelo name deles
     const form = evento.target
     const dados = {
       title: form.nome.value,
@@ -138,14 +140,14 @@ function Cadastro() {
     const novosErros = validarFormulario(dados)
     setErros(novosErros)
 
-    // só salva se não tiver nenhum erro
+    // so salva se nao tiver nenhum erro
     if (Object.keys(novosErros).length === 0) {
       dados.price = parseFloat(dados.price)
       salvarProdutoLocal(dados)
       setSucesso(true)
       form.reset()
 
-      // depois de 1,5s volta pro catálogo pra mostrar o produto novo
+      // espera 1,5s e volta pro catalogo pra mostrar o produto novo
       setTimeout(() => {
         navigate('/')
       }, 1500)
@@ -175,7 +177,7 @@ function Cadastro() {
 
         <Campo $temErro={!!erros.price}>
           <label htmlFor="preco">Preço (R$)</label>
-          <input id="preco" name="preco" type="number" step="0.01" placeholder="Ex: 149.90" />
+          <input id="preco" name="preco" type="number" step="0.01" placeholder="Ex: 67.90" />
           {erros.price && <MensagemErro>{erros.price}</MensagemErro>}
         </Campo>
 

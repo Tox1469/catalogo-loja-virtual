@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
+import tema from './tema.js'
 
-// estilos globais da aplicação (reset basico + fonte)
+// estilos globais (reset basico + fonte padrao)
 const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
@@ -10,8 +11,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-    background-color: #f4f5f7;
-    color: #2d2d2d;
+    background-color: ${tema.cores.fundo};
+    color: ${tema.cores.texto};
     line-height: 1.5;
   }
 

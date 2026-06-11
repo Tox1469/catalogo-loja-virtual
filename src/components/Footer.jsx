@@ -1,8 +1,9 @@
 import styled from 'styled-components'
+import tema from '../tema.js'
 
 const Rodape = styled.footer`
-  background-color: #1e2a4a;
-  color: #cfd6e4;
+  background-color: ${tema.cores.primaria};
+  color: ${tema.cores.textoClaro};
   text-align: center;
   padding: 20px;
   margin-top: 40px;

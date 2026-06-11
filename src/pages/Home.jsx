@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import tema from '../tema.js'
 import ProdutoCard from '../components/ProdutoCard.jsx'
 import { buscarProdutosLocais } from '../produtosStorage.js'
 
@@ -10,7 +11,11 @@ const Conteudo = styled.main`
 `
 
 const Banner = styled.section`
-  background: linear-gradient(120deg, #1e2a4a, #3b5089);
+  background: linear-gradient(
+    120deg,
+    ${tema.cores.primaria},
+    ${tema.cores.primariaClara}
+  );
   color: #fff;
   border-radius: 12px;
   padding: 40px 32px;
@@ -22,7 +27,7 @@ const Banner = styled.section`
   }
 
   p {
-    color: #cfd6e4;
+    color: ${tema.cores.textoClaro};
     max-width: 520px;
   }
 `
@@ -36,7 +41,7 @@ const Filtros = styled.section`
   input,
   select {
     padding: 10px 14px;
-    border: 1px solid #ccd2dd;
+    border: 1px solid ${tema.cores.bordaInput};
     border-radius: 8px;
     font-size: 0.95rem;
     background-color: #fff;
@@ -47,7 +52,7 @@ const Filtros = styled.section`
     min-width: 220px;
   }
 
-  /* no celular os filtros ficam empilhados */
+  /* no celular os filtros ficam um embaixo do outro */
   @media (max-width: 600px) {
     flex-direction: column;
 
@@ -83,7 +88,7 @@ const Aviso = styled.p`
   font-size: 1.05rem;
 `
 
-// página principal: lista os produtos vindos da API + os cadastrados no LocalStorage
+// pagina principal: lista os produtos da api + os cadastrados no localStorage
 function Home() {
   const [produtos, setProdutos] = useState([])
   const [carregando, setCarregando] = useState(true)
@@ -91,22 +96,22 @@ function Home() {
   const [busca, setBusca] = useState('')
   const [categoria, setCategoria] = useState('todas')
 
-  // useEffect roda quando o componente é montado na tela
+  // useEffect roda quando o componente monta na tela
   useEffect(() => {
     async function carregarProdutos() {
       try {
-        // requisição externa com a Fetch API
+        // requisicao externa com a fetch api
         const resposta = await fetch('https://fakestoreapi.com/products')
         if (!resposta.ok) {
           throw new Error('Erro na resposta da API')
         }
         const dados = await resposta.json()
-        // junta os produtos da API com os que foram cadastrados localmente
+        // junta os produtos da api com os que a gente cadastrou
         const locais = buscarProdutosLocais()
         setProdutos([...locais, ...dados])
       } catch (e) {
         console.error('Falha ao buscar produtos:', e)
-        // se a API falhar, mostra pelo menos os produtos locais
+        // se a api cair mostra pelo menos os produtos locais
         setProdutos(buscarProdutosLocais())
         setErro(true)
       } finally {
@@ -117,7 +122,7 @@ function Home() {
     carregarProdutos()
   }, [])
 
-  // monta a lista de categorias a partir dos próprios produtos (sem repetir)
+  // monta a lista de categorias a partir dos proprios produtos (Set tira as repetidas)
   const categorias = [...new Set(produtos.map((p) => p.category))]
 
   // aplica a busca por nome e o filtro de categoria

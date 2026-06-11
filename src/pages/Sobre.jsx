@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import tema from '../tema.js'
 
 const Conteudo = styled.main`
   max-width: 800px;
@@ -8,12 +9,12 @@ const Conteudo = styled.main`
 
 const Painel = styled.section`
   background-color: #fff;
-  border: 1px solid #e3e6ec;
+  border: 1px solid ${tema.cores.borda};
   border-radius: 12px;
   padding: 32px;
 
   h2 {
-    color: #1e2a4a;
+    color: ${tema.cores.primaria};
     margin-bottom: 16px;
   }
 
@@ -42,13 +43,13 @@ const Integrantes = styled.div`
 const CartaoIntegrante = styled.div`
   flex: 1;
   min-width: 200px;
-  background-color: #eef2fb;
+  background-color: ${tema.cores.fundoClaro};
   border-radius: 10px;
   padding: 20px;
   text-align: center;
 
   h3 {
-    color: #1e2a4a;
+    color: ${tema.cores.primaria};
     font-size: 1.05rem;
   }
 
@@ -59,7 +60,7 @@ const CartaoIntegrante = styled.div`
   }
 `
 
-// página sobre o projeto e os integrantes do grupo
+// pagina sobre o projeto e os integrantes do grupo
 function Sobre() {
   return (
     <Conteudo>

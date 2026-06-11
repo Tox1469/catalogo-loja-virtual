@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import tema from '../tema.js'
 
 const Card = styled.article`
   background-color: #fff;
-  border: 1px solid #e3e6ec;
+  border: 1px solid ${tema.cores.borda};
   border-radius: 10px;
-  padding: 16px; /* box model: espaçamento interno do card */
+  padding: 16px; /* box model: espacamento interno do card */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -13,7 +14,7 @@ const Card = styled.article`
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(30, 42, 74, 0.15);
+    box-shadow: 0 6px 16px rgba(49, 46, 129, 0.16);
   }
 `
 
@@ -32,8 +33,8 @@ const Imagem = styled.div`
 
 const Categoria = styled.span`
   align-self: flex-start;
-  background-color: #eef2fb;
-  color: #1e2a4a;
+  background-color: ${tema.cores.fundoClaro};
+  color: ${tema.cores.primaria};
   font-size: 0.75rem;
   padding: 3px 10px;
   border-radius: 20px;
@@ -43,7 +44,7 @@ const Categoria = styled.span`
 const Nome = styled.h3`
   font-size: 0.95rem;
   font-weight: 600;
-  /* limita o título em 2 linhas pra não quebrar o grid */
+  /* limita o titulo em 2 linhas se nao alguns cards ficavam gigantes */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -54,36 +55,35 @@ const Nome = styled.h3`
 const Preco = styled.p`
   font-size: 1.25rem;
   font-weight: bold;
-  color: #1e7f4f;
+  color: ${tema.cores.verde};
   margin-top: auto;
 `
 
 const BotaoVer = styled(Link)`
   display: block;
   text-align: center;
-  background-color: #1e2a4a;
+  background-color: ${tema.cores.primaria};
   color: #fff;
   padding: 10px;
   border-radius: 6px;
   font-size: 0.9rem;
 
   &:hover {
-    background-color: #2c3d68;
+    background-color: ${tema.cores.primariaHover};
   }
 `
 
 const Selo = styled.span`
   align-self: flex-start;
-  background-color: #f5a623;
-  color: #1e2a4a;
+  background-color: ${tema.cores.destaque};
+  color: ${tema.cores.primaria};
   font-size: 0.7rem;
   font-weight: bold;
   padding: 3px 10px;
   border-radius: 20px;
 `
 
-// card de produto usado na listagem do catálogo
-// recebe os dados via props do componente pai (Home)
+// card de produto da listagem, recebe os dados via props da Home
 function ProdutoCard({ produto }) {
   return (
     <Card>
