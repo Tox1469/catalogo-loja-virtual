@@ -6,6 +6,8 @@ Trabalho da disciplina de Front-End (Atividade Avaliativa Final).
 - Luis Boratto
 - Igor Pallisser
 
+**Site no ar:** https://catalogo-loja-virtual.vercel.app
+
 ## Sobre o projeto
 
 A MixStore é um sistema web de cadastro e consulta de produtos pra uma loja virtual de variedades. O catálogo carrega os produtos de uma API externa (Fake Store API) e tambem da pra cadastrar produtos novos, que ficam salvos no LocalStorage do navegador.
