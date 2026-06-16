@@ -94,6 +94,10 @@ function Sobre() {
             <h3>Igor Pallisser</h3>
             <p>Desenvolvimento</p>
           </CartaoIntegrante>
+          <CartaoIntegrante>
+            <h3>Luiz Henrique de Morais Franco</h3>
+            <p>Desenvolvimento</p>
+          </CartaoIntegrante>
         </Integrantes>
       </Painel>
     </Conteudo>

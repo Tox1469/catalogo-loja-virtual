@@ -5,6 +5,7 @@ Trabalho da disciplina de Front-End (Atividade Avaliativa Final).
 **Integrantes:**
 - Luis Boratto
 - Igor Pallisser
+- Luiz Henrique de Morais Franco
 
 **Site no ar:** https://catalogo-loja-virtual.vercel.app
 

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório - MixStore</title>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    color: #111;
+    line-height: 1.6;
+    max-width: 19cm;
+    margin: 0 auto;
+    text-align: justify;
+  }
+  .capa {
+    height: 26cm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    page-break-after: always;
+  }
+  .capa .instituicao {
+    margin-top: 60px;
+    font-weight: bold;
+    font-size: 13pt;
+  }
+  .capa .titulo {
+    font-size: 17pt;
+    font-weight: bold;
+    margin: 0 40px;
+  }
+  .capa .subtitulo {
+    font-size: 12pt;
+    font-weight: normal;
+    margin-top: 12px;
+  }
+  .capa .rodape-capa {
+    margin-bottom: 40px;
+    font-size: 11pt;
+  }
+  h1 {
+    font-size: 14pt;
+    margin-top: 28px;
+    border-bottom: 2px solid #1e2a4a;
+    padding-bottom: 4px;
+    color: #1e2a4a;
+  }
+  h2 {
+    font-size: 12.5pt;
+    margin-top: 20px;
+    color: #1e2a4a;
+  }
+  figure {
+    margin: 20px 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  figure img {
+    max-width: 100%;
+    max-height: 11cm;
+    border: 1px solid #999;
+  }
+  figcaption {
+    font-size: 10pt;
+    color: #444;
+    margin-top: 6px;
+  }
+  code {
+    background-color: #f0f0f0;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10.5pt;
+  }
+  ul { margin: 8px 0 8px 10px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <p class="instituicao">UNICESUMAR - UNIVERSIDADE CESUMAR<br>CAMPUS PONTA GROSSA</p>
+  <div>
+    <p class="titulo">CATÁLOGO DE PRODUTOS PARA UMA LOJA VIRTUAL<br>MIXSTORE</p>
+    <p class="subtitulo">Atividade Avaliativa Final - Disciplina de Front-End<br>Profª. Me. Emili Everz Golombiéski</p>
+  </div>
+  <div>
+    <p><strong>Luis Boratto</strong><br><strong>Igor Pallisser</strong><br><strong>Luiz Henrique de Morais Franco</strong></p>
+  </div>
+  <p class="rodape-capa">Ponta Grossa<br>Junho de 2026</p>
+</div>
+
+<h1>1. Introdução</h1>
+<p>
+Este relatório apresenta o desenvolvimento da MixStore, um sistema web de cadastro e consulta de
+produtos para uma loja virtual, criado como atividade avaliativa final da disciplina de Front-End.
+O tema escolhido pelo grupo foi "Catálogo de Produtos para uma Loja Virtual".
+</p>
+<p>
+A ideia do projeto foi simular o catálogo de uma loja de variedades, onde o usuário consegue
+visualizar os produtos disponíveis, pesquisar pelo nome, filtrar por categoria, ver os detalhes
+de cada item e tambem cadastrar produtos novos. Os produtos exibidos no catálogo vêm de duas
+fontes: uma API externa (Fake Store API), que fornece os produtos iniciais da loja, e o
+LocalStorage do navegador, que guarda os produtos cadastrados pelo próprio usuário.
+</p>
+<p>As principais funcionalidades do sistema são:</p>
+<ul>
+  <li>Listagem de produtos em uma grade responsiva, com imagem, categoria, nome e preço;</li>
+  <li>Busca de produtos pelo nome e filtro por categoria;</li>
+  <li>Cadastro de novos produtos com validação dos campos do formulário;</li>
+  <li>Armazenamento dos produtos cadastrados no LocalStorage;</li>
+  <li>Página de detalhes de cada produto, com descrição completa e avaliação;</li>
+  <li>Remoção de produtos que foram cadastrados localmente;</li>
+  <li>Página "Sobre" com informações do projeto e dos integrantes.</li>
+</ul>
+
+<h1>2. Desenvolvimento</h1>
+
+<h2>2.1 Tecnologias utilizadas</h2>
+<ul>
+  <li><strong>React 18</strong> - biblioteca principal para a construção da interface;</li>
+  <li><strong>React Router</strong> - navegação entre as páginas da aplicação;</li>
+  <li><strong>Styled Components</strong> - estilização dos componentes com CSS dentro do JavaScript;</li>
+  <li><strong>Vite</strong> - ferramenta de build e servidor de desenvolvimento;</li>
+  <li><strong>Fetch API</strong> - requisições HTTP para a Fake Store API;</li>
+  <li><strong>LocalStorage</strong> - armazenamento dos produtos cadastrados no navegador;</li>
+  <li><strong>Git e GitHub</strong> - controle de versão e hospedagem do código.</li>
+</ul>
+
+<h2>2.2 Estrutura HTML e semântica</h2>
+<p>
+O projeto utiliza HTML5 com estrutura semântica. No arquivo <code>index.html</code> definimos o
+idioma da página (<code>lang="pt-BR"</code>), a codificação UTF-8 e a meta tag viewport, que é
+essencial para a responsividade. Dentro dos componentes React, usamos as tags semânticas
+adequadas para cada parte da interface: <code>&lt;header&gt;</code> para o cabeçalho com o menu,
+<code>&lt;nav&gt;</code> para a navegação, <code>&lt;main&gt;</code> para o conteúdo principal de
+cada página, <code>&lt;section&gt;</code> para as seções (banner, filtros e grade de produtos),
+<code>&lt;article&gt;</code> para cada card de produto e <code>&lt;footer&gt;</code> para o rodapé.
+Nos formulários, todos os campos possuem <code>&lt;label&gt;</code> associado pelo atributo
+<code>htmlFor</code>, e as imagens possuem texto alternativo no atributo <code>alt</code>.
+</p>
+
+<h2>2.3 Estratégias de layout e responsividade</h2>
+<p>
+Para o layout usamos os três conceitos vistos em aula: Box Model, Flexbox e Grid Layout.
+O Box Model aparece em toda a aplicação - aplicamos <code>box-sizing: border-box</code>
+globalmente para que o padding e a borda não aumentem o tamanho final dos elementos, o que
+facilita bastante o cálculo dos espaçamentos.
+</p>
+<p>
+O Flexbox foi usado no cabeçalho (para alinhar a logo e o menu), nos cards de produto
+(organizando imagem, nome e preço em coluna), no formulário de cadastro e na página de detalhes.
+Já o Grid Layout foi usado na grade de produtos do catálogo, com
+<code>grid-template-columns: repeat(4, 1fr)</code> no desktop.
+</p>
+<p>
+A responsividade foi feita com Media Queries em três pontos de quebra principais: até 1000px a
+grade passa para 3 colunas, até 768px para 2 colunas e até 480px para 1 coluna. No celular, o
+menu de navegação ocupa a linha inteira do cabeçalho, os filtros de busca ficam empilhados e a
+página de detalhes muda de linha (imagem ao lado do texto) para coluna (imagem em cima do texto).
+</p>
+<p>
+Sobre a componentização: criamos um arquivo <code>tema.js</code> que junta toda a paleta de cores
+num lugar só (cor primária, cor de destaque, cor de erro, bordas, fundos e por aí vai). Em vez de
+sair espalhando código hexadecimal pelo projeto, cada componente importa a cor desse arquivo. Foi
+meio que a nossa versão de um design system, e na pratica isso salvou a gente: quando resolvemos
+trocar a paleta inteira no meio do caminho, mexemos basicamente num arquivo só.
+</p>
+
+<h2>2.4 Lógica de programação: validação, armazenamento e manipulação</h2>
+<p>
+A validação do formulário de cadastro foi implementada em JavaScript puro, sem nenhuma biblioteca
+de validação. Quando o evento de <code>submit</code> é disparado, usamos
+<code>preventDefault()</code> para impedir o recarregamento da página e validamos cada campo:
+o nome precisa de pelo menos 3 caracteres, o preço precisa ser um número maior que zero
+(verificado com <code>parseFloat</code> e <code>isNaN</code>), a categoria é obrigatória,
+a descrição precisa de pelo menos 10 caracteres e o link da imagem precisa começar com "http".
+Os erros encontrados são exibidos em vermelho abaixo de cada campo, e o produto só é salvo
+quando não há nenhum erro.
+</p>
+<p>
+Além dos eventos tratados pelo React (onChange nos campos de busca e filtro, onSubmit no
+formulário e onClick nos botões), também manipulamos listeners diretamente: o botão "voltar ao
+topo" usa <code>window.addEventListener('scroll')</code> para aparecer somente depois que o
+usuário rola a página 300px pra baixo, e o listener é removido com
+<code>removeEventListener</code> quando o componente sai da tela, evitando vazamento de memória.
+</p>
+<p>
+Os produtos cadastrados são salvos no LocalStorage. Criamos um arquivo separado
+(<code>produtosStorage.js</code>) com as funções de buscar, salvar e remover produtos. Como o
+LocalStorage só aceita texto, usamos <code>JSON.stringify()</code> para salvar e
+<code>JSON.parse()</code> para ler os dados. Cada produto local recebe um id próprio com o
+prefixo "local-" para não conflitar com os ids da API.
+</p>
+<p>
+A consulta dos produtos da loja é feita com a Fetch API. Na página inicial, fazemos uma
+requisição para <code>https://fakestoreapi.com/products</code>, convertemos a resposta para JSON
+e juntamos com os produtos do LocalStorage. Também tratamos o caso de erro: se a API estiver
+fora do ar, o sistema mostra um aviso e exibe pelo menos os produtos locais. Na página de
+detalhes, quando o produto é da API, buscamos ele individualmente pelo endpoint
+<code>/products/:id</code>.
+</p>
+
+<h2>2.5 Estruturação em React: componentes, estado e rotas</h2>
+<p>
+A aplicação foi dividida em componentes reutilizáveis e páginas. Na pasta
+<code>components</code> ficam o <code>Header</code>, o <code>Footer</code> e o
+<code>ProdutoCard</code>, que é o card exibido na grade do catálogo e recebe os dados do produto
+via props. Na pasta <code>pages</code> ficam as quatro páginas: <code>Home</code> (catálogo),
+<code>Cadastro</code>, <code>Detalhes</code> e <code>Sobre</code>.
+</p>
+<p>
+O controle de estado foi feito com o hook <code>useState</code>: na Home, por exemplo, temos
+estados para a lista de produtos, o texto da busca, a categoria selecionada e os indicadores de
+carregamento e erro. O hook <code>useEffect</code> foi usado para buscar os produtos da API no
+momento em que o componente é montado na tela (com o array de dependências vazio) e, na página
+de detalhes, para buscar o produto novamente sempre que o id da URL muda. Isso está ligado ao
+ciclo de vida dos componentes: o React atualiza o DOM Virtual quando o estado muda e renderiza
+na tela apenas o que mudou.
+</p>
+<p>
+As rotas foram criadas com o React Router: <code>/</code> para o catálogo,
+<code>/cadastro</code> para o formulário, <code>/produto/:id</code> para os detalhes (rota
+dinâmica, usando o hook <code>useParams</code> para pegar o id) e <code>/sobre</code> para a
+página do projeto. No menu usamos o componente <code>NavLink</code>, que marca automaticamente
+o link da página atual.
+</p>
+
+<h2>2.6 Desafios encontrados e soluções</h2>
+<ul>
+  <li>
+    <strong>Juntar produtos da API com produtos locais:</strong> no início os ids dos produtos
+    cadastrados conflitavam com os ids da API (1 a 20), o que quebrava a página de detalhes.
+    Resolvemos gerando ids com o prefixo "local-" e a data atual em milissegundos.
+  </li>
+  <li>
+    <strong>Falha na API:</strong> percebemos que se a Fake Store API estivesse fora do ar o
+    catálogo ficava em branco. Adicionamos um tratamento com try/catch que mostra uma mensagem
+    de erro e ainda exibe os produtos salvos localmente.
+  </li>
+  <li>
+    <strong>Títulos de tamanhos diferentes quebrando o grid:</strong> alguns produtos da API têm
+    nomes muito longos, o que deixava os cards desalinhados. Resolvemos limitando o título a duas
+    linhas com CSS e definindo uma altura mínima.
+  </li>
+  <li>
+    <strong>Nome da loja:</strong> no começo a loja se chamava TechStore, mas como a API retorna
+    produtos de várias categorias (roupas, joias e eletrônicos), mudamos para MixStore, um nome
+    que combina com uma loja de variedades.
+  </li>
+  <li>
+    <strong>Troca da identidade visual:</strong> depois de pronto o site, decidimos trocar a
+    paleta de cores porque a primeira versão não agradou o grupo. Como as cores ja estavam
+    centralizadas no arquivo de tema, a troca foi rápida - esse foi o momento que entendemos na
+    pratica a vantagem de um design system.
+  </li>
+</ul>
+
+<h1>3. Capturas de tela</h1>
+
+<figure>
+  <img src="imagens/01-home.png" alt="Página inicial">
+  <figcaption>Figura 1 - Página inicial com o catálogo de produtos carregados da API.</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/02-busca.png" alt="Busca de produtos">
+  <figcaption>Figura 2 - Busca por nome filtrando os produtos em tempo real.</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/03-validacao.png" alt="Validação do formulário">
+  <figcaption>Figura 3 - Validação do formulário de cadastro com mensagens de erro em cada campo.</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/04-cadastro-preenchido.png" alt="Formulário preenchido">
+  <figcaption>Figura 4 - Formulário de cadastro preenchido corretamente.</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/05-cadastro-sucesso.png" alt="Produto cadastrado no catálogo">
+  <figcaption>Figura 5 - Produto cadastrado aparecendo no catálogo com o selo "Cadastrado por nós".</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/06-detalhes.png" alt="Página de detalhes">
+  <figcaption>Figura 6 - Página de detalhes de um produto cadastrado, com opção de remover.</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/07-sobre.png" alt="Página sobre">
+  <figcaption>Figura 7 - Página "Sobre" com as informações do projeto e do grupo.</figcaption>
+</figure>
+
+<figure>
+  <img src="imagens/08-mobile.png" alt="Versão mobile">
+  <figcaption>Figura 8 - Layout responsivo no celular, com os produtos em uma coluna.</figcaption>
+</figure>
+
+<h1>4. Conclusão</h1>
+<p>
+No fim, esse trabalho acabou juntando quase tudo que a gente viu na disciplina: começou na parte
+mais basica de HTML semântico e layout com Flexbox e Grid, e foi crescendo até virar uma
+aplicação React inteira, com rotas, estado e consumo de API. O que mais ficou pra gente foi
+entender de verdade como o React lida com o estado e re-renderiza só o que mudou - no começo
+isso parecia meio mágica, depois caiu a ficha. E ter quebrado o projeto em componentes menores
+ajudou bastante na hora de mexer e achar as coisas.
+</p>
+<p>
+Se a gente fosse continuar, a próxima coisa seria um carrinho de compras de verdade, com o total
+somando. Também daria pra deixar editar os produtos cadastrados (hoje só dá pra remover) e, num
+passo maior, trocar o LocalStorage por um banco com backend, pra os produtos não ficarem presos
+no navegador de um aparelho só.
+</p>
+
+</body>
+</html>

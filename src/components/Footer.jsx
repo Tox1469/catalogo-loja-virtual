@@ -18,7 +18,7 @@ function Footer() {
   return (
     <Rodape>
       <p>MixStore - Catálogo de Produtos para Loja Virtual</p>
-      <p>Trabalho de Front-End | Luis Boratto e Igor Pallisser</p>
+      <p>Trabalho de Front-End | Luis Boratto, Igor Pallisser e Luiz Henrique de Morais Franco</p>
     </Rodape>
   )
 }
